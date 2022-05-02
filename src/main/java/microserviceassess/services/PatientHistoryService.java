@@ -15,29 +15,41 @@ import java.util.regex.Pattern;
 @Service
 public class PatientHistoryService {
 
-    private final static Logger logger = LoggerFactory.getLogger(PatientHistoryService.class);
     private final List<String> triggerFactorList;
 
     public PatientHistoryService(){
         triggerFactorList = createTermsList();
     }
 
+    /**
+     * This method calculate first the factorLevel by looking for factor in
+     * patientHistory notes.
+     * Then it calculate the age from the birthDate of the patient.
+     * Finally, it will determine the dangerLevel of the patient and return a message.
+     * @param patient
+     * @param patientHistoryList
+     * @return a String message that represent the assessment
+     */
+
     public String assessmentGenerator(Patient patient, List<PatientHistory> patientHistoryList){
         int factorLevel = calculatePatientFactorLevel(patientHistoryList);
         int age = determineAge(patient.getBirthDate());
         String dangerLevel = determinePatientDangerLevel(factorLevel, patient.getGender(), age);
-        System.out.println(determinePatientDangerLevel(factorLevel, patient.getGender(), age));
-
-        System.out.println(patient.getGender() + " " + age);
 
         String message = "Patient : " + patient.getFirstName() + " " + patient.getLastName()
                 + " Test : Test" + dangerLevel
                 + " (age " + age + ")"
                 + " diabetes assessment is: " + dangerLevel;
 
-        logger.info(message);
         return message;
     }
+
+    /**
+     * Using a list of terms, this method increase the factorLevel by one
+     * for each term present in each patientHistory notes.
+     * @param patientHistoryList
+     * @return an integer
+     */
 
     private int calculatePatientFactorLevel(List<PatientHistory> patientHistoryList){
         int factorLevel = 0;
@@ -52,7 +64,6 @@ public class PatientHistoryService {
             }
         }
 
-        System.out.println("factorLevel is : " + factorLevel);
         return factorLevel;
     }
 

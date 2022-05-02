@@ -11,8 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -32,9 +30,6 @@ public class PatientHistoryController {
 
     @GetMapping("/assess/generateById/{id}")
     public String createAssessUsingPatientId(@PathVariable("id") int patientId, Model model){
-        //Must get a result like this : Patient: PatientName or Test TestStatus (age X) diabetes assessment is: result
-        //Example : Patient: Test TestBorderline (age 73) diabetes assessment is: Borderline
-        //There is 4 levels of dangers : None, Borderline, In Danger and Early onset
         Patient patient = patientProxy.findById(patientId);
         List<PatientHistory> patientHistoryList = patientHistoryProxy.findPatientHistoryListById(patientId);
         logger.info(String.valueOf(patientHistoryList.size()));
@@ -49,9 +44,6 @@ public class PatientHistoryController {
 
     @GetMapping("/assess/generateByLastName/{lastName}")
     public String createAssessUsingLastName(@PathVariable("lastName") String lastName, Model model){
-        //Must get a result like this : Patient: PatientName or Test TestStatus (age X) diabetes assessment is: result
-        //Example : Patient: Test TestBorderline (age 73) diabetes assessment is: Borderline
-        //There is 4 levels of dangers : None, Borderline, In Danger and Early onset
         Patient patient =patientProxy.findByLastName(lastName);
         List<PatientHistory> patientHistoryList = patientHistoryProxy.findPatientHistoryListById(patient.getPatientId());
         logger.info(String.valueOf(patientHistoryList.size()));
