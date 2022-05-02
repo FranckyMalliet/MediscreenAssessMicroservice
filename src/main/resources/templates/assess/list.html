@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	  xmlns:th="http://www.thymeleaf.org">
+	<head>
+	<meta charset="utf-8"/>
+	<title>Home</title>
+	<link rel="stylesheet" href="../../css/bootstrap.min.css" >
+	</head>
+	<body>
+		<div class="container">
+
+			<div class="row">
+				<h2>Patient List</h2>
+			</div>
+			<div class="row">
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th>Patient ID</th>
+							<th>First Name</th>
+							<th>Last Name</th>
+							<th>Birth Date</th>
+							<th>Gender</th>
+							<th>Address</th>
+							<th>Phone</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="Patient : ${patients}">
+							<td style="width: 10%" th:text="${Patient.patientId}"></td>
+							<td th:text="${Patient.firstName}"></td>
+							<td th:text="${Patient.lastName}"></td>
+							<td th:text="${Patient.birthDate}"></td>
+							<td th:text="${Patient.gender}"></td>
+							<td th:text="${Patient.address}"></td>
+							<td th:text="${Patient.phone}"></td>
+							<td style="width 15%" class="text-center">
+								<a th:href="@{/assess/generateById/{id}(id=${Patient.patientId})}">Generate with ID</a>
+								<a th:href="@{/assess/generateByLastName/{lastName}(lastName=${Patient.lastName})}">Generate with LastName</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</body>
+</html>

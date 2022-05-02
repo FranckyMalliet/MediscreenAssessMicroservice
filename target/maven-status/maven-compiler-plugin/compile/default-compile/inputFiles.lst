@@ -1,0 +1,9 @@
+E:\Users\Francky Malliet\git\MediscreenAssessMicroservice\src\main\java\microserviceassess\beans\Patient.java
+E:\Users\Francky Malliet\git\MediscreenAssessMicroservice\src\main\java\microserviceassess\beans\PatientHistory.java
+E:\Users\Francky Malliet\git\MediscreenAssessMicroservice\src\main\java\microserviceassess\controllers\PatientController.java
+E:\Users\Francky Malliet\git\MediscreenAssessMicroservice\src\main\java\microserviceassess\config\FeignConfig.java
+E:\Users\Francky Malliet\git\MediscreenAssessMicroservice\src\main\java\microserviceassess\proxies\PatientProxy.java
+E:\Users\Francky Malliet\git\MediscreenAssessMicroservice\src\main\java\microserviceassess\controllers\PatientHistoryController.java
+E:\Users\Francky Malliet\git\MediscreenAssessMicroservice\src\main\java\microserviceassess\MicroserviceAssessApplication.java
+E:\Users\Francky Malliet\git\MediscreenAssessMicroservice\src\main\java\microserviceassess\proxies\PatientHistoryProxy.java
+E:\Users\Francky Malliet\git\MediscreenAssessMicroservice\src\main\java\microserviceassess\services\PatientHistoryService.java

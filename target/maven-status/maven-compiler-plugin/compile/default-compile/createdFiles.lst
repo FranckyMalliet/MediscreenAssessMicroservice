@@ -1,0 +1,9 @@
+microserviceassess\config\FeignConfig.class
+microserviceassess\beans\PatientHistory.class
+microserviceassess\beans\Patient.class
+microserviceassess\proxies\PatientProxy.class
+microserviceassess\services\PatientHistoryService.class
+microserviceassess\controllers\PatientController.class
+microserviceassess\MicroserviceAssessApplication.class
+microserviceassess\proxies\PatientHistoryProxy.class
+microserviceassess\controllers\PatientHistoryController.class
