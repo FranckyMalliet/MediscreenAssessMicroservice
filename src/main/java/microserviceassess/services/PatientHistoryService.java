@@ -2,8 +2,6 @@ package microserviceassess.services;
 
 import microserviceassess.beans.Patient;
 import microserviceassess.beans.PatientHistory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,26 +20,38 @@ public class PatientHistoryService {
     }
 
     /**
-     * This method calculate first the factorLevel by looking for factor in
-     * patientHistory notes.
-     * Then it calculate the age from the birthDate of the patient.
-     * Finally, it will determine the dangerLevel of the patient and return a message.
+     * This method calculate return an assessment using findDangerLevel method.
      * @param patient
      * @param patientHistoryList
      * @return a String message that represent the assessment
      */
 
     public String assessmentGenerator(Patient patient, List<PatientHistory> patientHistoryList){
+        String dangerLevel = findDangerLevel(patient, patientHistoryList);
+
+        String message = "Patient : " + patient.getFirstName() + " " + patient.getLastName()
+                + " Test : Test" + dangerLevel
+                + " (age " + determineAge(patient.getBirthDate()) + ")"
+                + " diabetes assessment is: " + dangerLevel;
+
+        return message;
+    }
+
+    /**
+     * Given a patient and his patientHistory notes, calculate first the factorLevel.
+     * Then it calculate the age from the birthDate of the patient.
+     * Finally, it will determine the dangerLevel of the patient and return a message.
+     * @param patient
+     * @param patientHistoryList
+     * @return a String message that represent the danger level
+     */
+
+    public String findDangerLevel(Patient patient, List<PatientHistory> patientHistoryList){
         int factorLevel = calculatePatientFactorLevel(patientHistoryList);
         int age = determineAge(patient.getBirthDate());
         String dangerLevel = determinePatientDangerLevel(factorLevel, patient.getGender(), age);
 
-        String message = "Patient : " + patient.getFirstName() + " " + patient.getLastName()
-                + " Test : Test" + dangerLevel
-                + " (age " + age + ")"
-                + " diabetes assessment is: " + dangerLevel;
-
-        return message;
+        return dangerLevel;
     }
 
     /**

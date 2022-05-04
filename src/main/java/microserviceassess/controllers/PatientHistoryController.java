@@ -32,10 +32,12 @@ public class PatientHistoryController {
     public String createAssessUsingPatientId(@PathVariable("id") int patientId, Model model){
         Patient patient = patientProxy.findById(patientId);
         List<PatientHistory> patientHistoryList = patientHistoryProxy.findPatientHistoryListById(patientId);
-        logger.info(String.valueOf(patientHistoryList.size()));
 
         String result = patientHistoryService.assessmentGenerator(patient, patientHistoryList);
         logger.info(result);
+
+        patient.setDangerLevel(patientHistoryService.findDangerLevel(patient, patientHistoryList));
+        patientProxy.updatePatientDangerLevel(patient);
 
         logger.debug("Generating assess using patient ID");
         model.addAttribute("patients", patientProxy.findAll());
@@ -46,10 +48,12 @@ public class PatientHistoryController {
     public String createAssessUsingLastName(@PathVariable("lastName") String lastName, Model model){
         Patient patient =patientProxy.findByLastName(lastName);
         List<PatientHistory> patientHistoryList = patientHistoryProxy.findPatientHistoryListById(patient.getPatientId());
-        logger.info(String.valueOf(patientHistoryList.size()));
 
         String result = patientHistoryService.assessmentGenerator(patient, patientHistoryList);
         logger.info(result);
+
+        patient.setDangerLevel(patientHistoryService.findDangerLevel(patient, patientHistoryList));
+        patientProxy.updatePatientDangerLevel(patient);
 
         logger.debug("Generating assess using last name");
         model.addAttribute("patients", patientProxy.findAll());

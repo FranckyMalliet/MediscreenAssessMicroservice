@@ -31,6 +31,19 @@ public class PatientHistoryServiceTest {
         Assertions.assertEquals("Patient : Paul Atreides Test : TestIn Danger (age 22) diabetes assessment is: In Danger", result);
     }
 
+    @Test
+    public void givenAPatientAndAPatientHistoryList_ReturnAStringOfDangerLevel(){
+        //GIVEN
+        Patient patient = generateUser();
+        List<PatientHistory> patientHistoryList = generatePatientHistoryList(patient);
+
+        //WHEN
+        String dangerLevel = patientHistoryService.findDangerLevel(patient, patientHistoryList);
+
+        //THEN
+        Assertions.assertEquals("In Danger", dangerLevel);
+    }
+
     private Patient generateUser(){
         Patient patient = new Patient();
         patient.setPatientId(100);

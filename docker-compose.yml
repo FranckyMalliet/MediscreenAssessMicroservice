@@ -1,6 +1,6 @@
 version: '3'
 services:
-  report:
+  assess:
     image: microserviceassess
     container_name: microserviceassess
     networks:
@@ -20,8 +20,6 @@ services:
       mediscreen:
         aliases:
           - "patienthistory"
-    expose:
-      - 15001
     ports:
       - "81:80"
     restart: always
@@ -33,8 +31,6 @@ services:
       mediscreen:
         aliases:
           - "patient"
-    expose:
-      - 15002
     ports:
       - "82:80"
     restart: always

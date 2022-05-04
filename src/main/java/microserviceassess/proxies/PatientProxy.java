@@ -4,6 +4,8 @@ import microserviceassess.beans.Patient;
 import microserviceassess.config.FeignConfig;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -14,9 +16,12 @@ public interface PatientProxy {
     @GetMapping("/patient/assess/list")
     List<Patient> findAll();
 
-    @GetMapping("patient/assess/patientId")
+    @GetMapping("/patient/assess/patientId")
     Patient findById(@RequestParam("id") Integer patientId);
 
-    @GetMapping("patient/assess/patientLastName")
+    @GetMapping("/patient/assess/patientLastName")
     Patient findByLastName(@RequestParam("lastName") String lastName);
+
+    @PostMapping("/patient/assess/update")
+    void updatePatientDangerLevel(@RequestBody Patient patient);
 }
