@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PatientHistoryController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MediscreenAssessMicroservice</a> &gt; <a href="index.source.html" class="el_package">microserviceassess.controllers</a> &gt; <span class="el_source">PatientHistoryController.java</span></div><h1>PatientHistoryController.java</h1><pre class="source lang-java linenums">package microserviceassess.controllers;
+
+import microserviceassess.beans.Patient;
+import microserviceassess.beans.PatientHistory;
+import microserviceassess.proxies.PatientHistoryProxy;
+import microserviceassess.proxies.PatientProxy;
+import microserviceassess.services.PatientHistoryService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
+import java.util.List;
+
+@Controller
+public class PatientHistoryController {
+
+<span class="fc" id="L20">    private final static Logger logger = LoggerFactory.getLogger(PatientHistoryController.class);</span>
+    private PatientProxy patientProxy;
+    private PatientHistoryProxy patientHistoryProxy;
+    private PatientHistoryService patientHistoryService;
+
+<span class="fc" id="L25">    public PatientHistoryController(PatientProxy patientProxy, PatientHistoryProxy patientHistoryProxy, PatientHistoryService patientHistoryService){</span>
+<span class="fc" id="L26">        this.patientProxy = patientProxy;</span>
+<span class="fc" id="L27">        this.patientHistoryProxy = patientHistoryProxy;</span>
+<span class="fc" id="L28">        this.patientHistoryService = patientHistoryService;</span>
+<span class="fc" id="L29">    }</span>
+
+    @GetMapping(&quot;/assess/generateById/{id}&quot;)
+    public String createAssessUsingPatientId(@PathVariable(&quot;id&quot;) int patientId, Model model){
+<span class="nc" id="L33">        Patient patient = patientProxy.findById(patientId);</span>
+<span class="nc" id="L34">        List&lt;PatientHistory&gt; patientHistoryList = patientHistoryProxy.findPatientHistoryListById(patientId);</span>
+
+<span class="nc" id="L36">        String result = patientHistoryService.assessmentGenerator(patient, patientHistoryList);</span>
+<span class="nc" id="L37">        logger.info(result);</span>
+
+<span class="nc" id="L39">        patient.setDangerLevel(patientHistoryService.findDangerLevel(patient, patientHistoryList));</span>
+<span class="nc" id="L40">        patientProxy.updatePatientDangerLevel(patient);</span>
+
+<span class="nc" id="L42">        logger.debug(&quot;Generating assess using patient ID&quot;);</span>
+<span class="nc" id="L43">        model.addAttribute(&quot;patients&quot;, patientProxy.findAll());</span>
+<span class="nc" id="L44">        return &quot;redirect:/assess/list&quot;;</span>
+    }
+
+    @GetMapping(&quot;/assess/generateByLastName/{lastName}&quot;)
+    public String createAssessUsingLastName(@PathVariable(&quot;lastName&quot;) String lastName, Model model){
+<span class="nc" id="L49">        Patient patient =patientProxy.findByLastName(lastName);</span>
+<span class="nc" id="L50">        List&lt;PatientHistory&gt; patientHistoryList = patientHistoryProxy.findPatientHistoryListById(patient.getPatientId());</span>
+
+<span class="nc" id="L52">        String result = patientHistoryService.assessmentGenerator(patient, patientHistoryList);</span>
+<span class="nc" id="L53">        logger.info(result);</span>
+
+<span class="nc" id="L55">        patient.setDangerLevel(patientHistoryService.findDangerLevel(patient, patientHistoryList));</span>
+<span class="nc" id="L56">        patientProxy.updatePatientDangerLevel(patient);</span>
+
+<span class="nc" id="L58">        logger.debug(&quot;Generating assess using last name&quot;);</span>
+<span class="nc" id="L59">        model.addAttribute(&quot;patients&quot;, patientProxy.findAll());</span>
+<span class="nc" id="L60">        return &quot;redirect:/assess/list&quot;;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
