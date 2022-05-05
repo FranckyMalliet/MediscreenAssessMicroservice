@@ -13,6 +13,7 @@ Made with Spring Boot application.
 
 ## About this microservice
 ### There is 3 containers with these specific names :
+
 - microserviceassess
 
 docker compose alias : assess,
@@ -28,7 +29,8 @@ This container work on port 81
 docker compose alias : patient,
 This container work on port 82
 
-###How to use
+### How to use
+
 Using the terminal, go to the pom.xml folder and use this command :
 
     mvn package -DskipTests
